@@ -276,8 +276,13 @@ index 2afd7bbefdb..2be981523ed 100644
 +                Method method_getNativeContainer = Component.class.getDeclaredMethod("getNativeContainer");
 +                method_getNativeContainer.setAccessible(true);
 +                Container c = (Container)method_getNativeContainer.invoke(awtFocussedComponent);
-+                if(c != null)
-+                    result = new int[]{point.x - c.getPeerLocationOnScreen().x + caret_x, point.y - c.getPeerLocationOnScreen().y + font_height + caret_y};
++                if(c!=null){
++                    double scale = 2.0;
++                    result = new int[]{point.x - c.getPeer().getLocationOnScreen().x + caret_x, point.y - c.getPeer().getLocationOnScreen().y + font_height + caret_y};
++                    result[0] = (int)Math.round(result[0]*scale);
++                    result[1] = (int)Math.round(result[1]*scale);
++                    //print调试大法可以放这里
++                }
 +
 +                return result;
 +            } catch (Exception e) {
